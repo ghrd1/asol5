@@ -1,0 +1,57 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title E-learning Platform - Профиль
+    link(rel="stylesheet" href="/index.css")
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const userId = localStorage.getItem('userId');
+      const profileLink = document.getElementById('profile-link');
+      const logoutLink = document.getElementById('logout-link');
+
+      if (profileLink && userId) {
+        profileLink.href = `/profile/${userId}`;
+      }
+
+      logoutLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        localStorage.removeItem('userId');
+        window.location.href = '/logout';
+      });
+    });
+  body
+    header
+      h1 E-learning Platform
+      nav
+        ul
+          li: a(href="/") Главная
+          li: a(href="/course") Курсы
+          li: a(id="profile-link", href="/profile") Профиль
+          li: a(id="logout-link", href="#") Выход
+    main
+      section.profile
+        h2 Профиль пользователя
+        if user
+          .user-info
+            p 
+              strong Имя:
+              |  #{user.name}
+            p 
+              strong Логин:
+              |  #{user.login}
+          .current-courses
+            h3 Текущие курсы
+            ul
+              each course in user.currentCourses
+                li #{course.title}
+          .completed-courses
+            h3 Завершенные курсы
+            ul
+              each course in user.completedCourses
+                li #{course.title}
+        else
+          p Пользователь не найден
+    footer
+      p © 2024 E-learning Platform. Все права защищены.

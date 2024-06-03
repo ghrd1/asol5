@@ -1,0 +1,310 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding-top: 60px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header h1 {
+    margin-left: 20px;
+}
+
+nav ul {
+    list-style: none;
+    margin-right: 20px;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+    padding-left: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+.hero {
+    background-color: #007bff;
+    color: #fff;
+    padding: 50px;
+    text-align: center;
+}
+
+.hero h2 {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #fff;
+    color: #007bff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.courses {
+    margin-top: 40px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.exit  {
+    list-style-type: none;
+    padding-right: 20px;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    text-align: right; 
+}
+
+.exit li{
+    text-align: right;
+}
+
+.exit img {
+    cursor: pointer;
+    width: 52px;
+    height: 52px;
+    object-fit: cover; 
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+}
+
+form input {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Дополнительный CSS для страницы Курсы */
+.courses {
+    padding: 20px;
+}
+
+.course-card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.course-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.course-card h3 {
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    margin-bottom: 15px;
+}
+
+.course-card .btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.course-card .btn:hover {
+    background-color: #0056b3;
+}
+
+h2{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+.register-course-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.register-course-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Анимация загрузки */
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .loader {
+        border: 8px solid rgba(0, 0, 0, 0.1);
+        border-right-color: #000;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        visibility: visible;
+      }
+
+/* Дополнительный CSS для страницы Профиль */
+.profile {
+    padding: 20px;
+}
+
+.user-info {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.current-courses,
+.completed-courses {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.current-courses h3,
+.completed-courses h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.current-courses ul,
+.completed-courses ul {
+    list-style: none;
+    padding: 0;
+}
+
+.current-courses ul li,
+.completed-courses ul li {
+    margin-bottom: 10px;
+}
+
+.current-courses ul li::before,
+.completed-courses ul li::before {
+    content: "\2022"; 
+    color: #007bff;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}

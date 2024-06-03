@@ -1,0 +1,47 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title E-learning Platform - Курсы
+    link(rel="stylesheet" href="index.css")
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.querySelector('.loader');
+      const courseSection = document.querySelector('section.course');
+      const userId = localStorage.getItem('userId');
+      const profileLink = document.getElementById('profile-link');
+
+      if (profileLink && userId) {
+        profileLink.href = `/profile/${userId}`;
+      }
+
+      // Показываем анимацию загрузки на первые 2 секунды
+      setTimeout(() => {
+        loader.style.display = 'none'; // Скрываем анимацию загрузки
+        courseSection.style.visibility = 'visible'; 
+      }, 2000);
+    });
+  body
+    header
+      h1 E-learning Platform
+      nav
+        ul
+          li: a(href="/") Главная
+          li: a(href="/course") Курсы
+          if !userId
+            li: a(id="profile-link", href="#", class="inactive-link") Профиль
+          else
+            li: a(id="profile-link", href="/profile") Профиль
+    main
+      section.course(style="visibility: hidden;")
+        h2 Курсы
+        .loader
+        each course in courses
+          .course-card
+            h3= course.title
+            p Описание: #{course.description}
+            p Длительность: #{course.duration}
+            p Цена: #{course.price} $
+    footer
+      p © 2024 E-learning Platform. Все права защищены.

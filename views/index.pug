@@ -1,0 +1,169 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title E-learning Platform
+    link(rel="stylesheet" href="/index.css")
+  body
+    header
+      h1 E-learning Platform
+      nav
+        ul
+          li: a(href="/") Главная
+          li: a(href="/course") Курсы
+          if !loginClicked
+            li: a(id="profile-link", href="#") Профиль
+          else
+            li: a(id="profile-link", href="/profile") Профиль
+          li.exit 
+            a(href="#")
+              img.exit(src="/profile.png" alt="Вход")
+    main
+      section.hero
+        h2 Добро пожаловать на платформу для онлайн-обучения!
+        p Выберите курс из нашего каталога и начните учиться прямо сейчас.
+        a.btn(href="#" id="startLearningButton") Начать обучение
+      section.courses
+        h2 Популярные курсы
+        each course, index in courses
+          if index < 4 
+            .course-card
+              h3= course.title
+              p Описание: #{course.description}
+              p Длительность: #{course.duration}
+              p Цена: #{course.price} $
+    // Модальное окно авторизации
+    .modal#loginModal
+      .modal-content
+        span.close &times;
+        form(id="loginForm")
+          h2 Вход
+          label(for="login") Логин
+          input(type="text" id="login" name="login" required)
+          label(for="password") Пароль
+          input(type="password" id="password" name="password" required)
+          button(type="submit" id="loginButton") Войти
+    // Модальное окно регистрации
+    .modal#registerModal
+      .modal-content
+        span.close &times;
+        form(id="registerForm")
+          h2 Регистрация
+          label(for="registerName") Имя
+          input(type="text" id="registerName" name="registerName" required)
+          label(for="registerLogin") Логин
+          input(type="text" id="registerLogin" name="registerLogin" required)
+          label(for="registerPassword") Пароль
+          input(type="password" id="registerPassword" name="registerPassword" required)
+          button(type="submit" id="registerButton") Зарегистрироваться
+    footer
+      p © 2024 E-learning Platform. Все права защищены.
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginModal = document.getElementById('loginModal');
+      const registerModal = document.getElementById('registerModal');
+      const startLearningButton = document.getElementById('startLearningButton');
+      const exitLink = document.querySelector('li.exit a');
+      const loginCloseModal = document.querySelector('#loginModal .close');
+      const registerCloseModal = document.querySelector('#registerModal .close');
+      let loginClicked = false;
+
+      exitLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          loginModal.style.display = 'block';
+      });
+
+      loginCloseModal.addEventListener('click', () => {
+          loginModal.style.display = 'none';
+      });
+
+      registerCloseModal.addEventListener('click', () => {
+          registerModal.style.display = 'none';
+      });
+
+      startLearningButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          registerModal.style.display = 'block';
+      });
+
+      window.addEventListener('click', (e) => {
+          if (e.target == loginModal) {
+              loginModal.style.display = 'none';
+          } else if (e.target == registerModal) {
+              registerModal.style.display = 'none';
+          }
+      });
+
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const loginButton = document.getElementById('loginButton');
+      const registerButton = document.getElementById('registerButton');
+      const profileLink = document.getElementById('profile-link');
+
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const login = document.getElementById('login').value;
+        const password = document.getElementById('password').value;
+
+        loginClicked = true;
+
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ login, password }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem('userId', result.userId);
+          profileLink.href = `/profile/${result.userId}`;
+          window.location.href = `/profile/${result.userId}`;
+        } else {
+          alert(result.message);
+        }
+      });
+
+      registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const registerName = document.getElementById('registerName').value;
+        const registerLogin = document.getElementById('registerLogin').value;
+        const registerPassword = document.getElementById('registerPassword').value;
+
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: registerName, login: registerLogin, password: registerPassword }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('Регистрация успешна!');
+          registerModal.style.display = 'none';
+        } else {
+          alert(result.message);
+        }
+      });
+
+      const userId = localStorage.getItem('userId');
+      if (profileLink && userId) {
+        profileLink.href = `/profile/${userId}`;
+      }
+
+      const logoutLink = document.querySelector('a[href="/logout"]');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', (event) => {
+          event.preventDefault();
+          localStorage.removeItem('userId');
+          window.location.href = '/logout';
+        });
+      }
+    });
